@@ -8,12 +8,12 @@ defmodule ParkMate.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      ParkMateWeb.Telemetry,
-      ParkMate.Repo,
-      {DNSCluster, query: Application.get_env(:park_mate, :dns_cluster_query) || :ignore},
+      # ParkMateWeb.Telemetry,
+      # ParkMate.Repo,
+      # {DNSCluster, query: Application.get_env(:park_mate, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ParkMate.PubSub},
       # Start the Finch HTTP client for sending emails
-      {Finch, name: ParkMate.Finch},
+      # {Finch, name: ParkMate.Finch},
       # Start a worker by calling: ParkMate.Worker.start_link(arg)
       # {ParkMate.Worker, arg},
       # Start to serve requests, typically the last entry
