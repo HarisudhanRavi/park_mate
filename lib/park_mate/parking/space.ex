@@ -9,4 +9,5 @@ defmodule ParkMate.Parking.Space do
   # ParkMate.Parking.Manager.get_all_spaces()
   # ParkMate.Parking.Manager.get_free_spaces()
   # ParkMate.Parking.Manager.park(:floor_1, :spot_1, "TN001")
+  # ParkMate.Parking.Manager.unpark(:floor_1, :spot_1, "TN001")
 end
