@@ -7,5 +7,6 @@ defmodule ParkMate.Parking.Space do
   def parking_spaces(), do: @parking_spaces
 
   # ParkMate.Parking.Manager.get_all_spaces()
+  # ParkMate.Parking.Manager.get_free_spaces()
   # ParkMate.Parking.Manager.park(:floor_1, :spot_1, "TN001")
 end
