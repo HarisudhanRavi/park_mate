@@ -12,6 +12,8 @@ defmodule ParkMate.Application do
       # ParkMate.Repo,
       # {DNSCluster, query: Application.get_env(:park_mate, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ParkMate.PubSub},
+      # Start the parking manager
+      ParkMate.Parking.Manager,
       # Start the Finch HTTP client for sending emails
       # {Finch, name: ParkMate.Finch},
       # Start a worker by calling: ParkMate.Worker.start_link(arg)
