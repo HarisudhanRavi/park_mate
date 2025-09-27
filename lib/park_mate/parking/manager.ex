@@ -6,8 +6,8 @@ defmodule ParkMate.Parking.Manager do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def get_spaces() do
-    GenServer.call(__MODULE__, :get_spaces)
+  def get_all_spaces() do
+    GenServer.call(__MODULE__, :get_all_spaces)
   end
 
   def park(floor, spot, vehicle) do
@@ -24,7 +24,7 @@ defmodule ParkMate.Parking.Manager do
     {:ok, %{parking_spaces: ParkMate.Parking.Space.parking_spaces()}}
   end
 
-  def handle_call(:get_spaces, _from, %{parking_spaces: parking_spaces} = state) do
+  def handle_call(:get_all_spaces, _from, %{parking_spaces: parking_spaces} = state) do
     {:reply, parking_spaces, state}
   end
 
