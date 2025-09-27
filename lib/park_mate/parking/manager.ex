@@ -14,6 +14,10 @@ defmodule ParkMate.Parking.Manager do
     GenServer.call(__MODULE__, {:park, floor, spot, vehicle})
   end
 
+  def unpark(floor, spot) do
+    GenServer.cast(__MODULE__, {:unpark, floor, spot})
+  end
+
   def init(_opts) do
     Logger.info("Starting Parking Manager...")
 
@@ -37,6 +41,15 @@ defmodule ParkMate.Parking.Manager do
       status ->
         {:reply, {:error, status}, state}
     end
+  end
+
+  def handle_cast({:unpark, floor, spot}, %{parking_spaces: parking_spaces}) do
+    parking_spaces =
+      Map.update!(parking_spaces, floor, fn floor_value ->
+        Map.put(floor_value, spot, %{status: :free, vehicle: nil})
+      end)
+
+    {:noreply, %{parking_spaces: parking_spaces}}
   end
 
   defp check_for_availability(parking_spaces, floor, spot) do
