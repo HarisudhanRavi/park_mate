@@ -4,7 +4,5 @@ defmodule ParkMate.Parking.Space do
     floor_2: %{spot_1: %{status: :free, vehicle: nil}, spot_2: %{status: :free, vehicle: nil}}
   }
 
-  def parking_spaces() do
-    @parking_spaces
-  end
+  def parking_spaces(), do: @parking_spaces
 end
