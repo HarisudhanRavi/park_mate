@@ -15,6 +15,10 @@ defmodule ParkMate.Parking.Manager do
     GenServer.call(__MODULE__, :get_free_spaces)
   end
 
+  def get_parked_vehicle(floor, spot) do
+    GenServer.call(__MODULE__, {:get_parked_vehicle, floor, spot})
+  end
+
   def park(floor, spot, vehicle) do
     GenServer.call(__MODULE__, {:park, floor, spot, vehicle})
   end
@@ -45,6 +49,14 @@ defmodule ParkMate.Parking.Manager do
       |> Enum.into(%{})
 
     {:reply, free_spaces, state}
+  end
+
+  def handle_call(
+        {:get_parked_vehicle, floor, spot},
+        _from,
+        %{parking_spaces: parking_spaces} = state
+      ) do
+    {:reply, get_parked_vehicle(parking_spaces, floor, spot), state}
   end
 
   def handle_call({:park, floor, spot, vehicle}, _from, %{parking_spaces: parking_spaces} = state) do
