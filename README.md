@@ -1,17 +1,21 @@
 # ParkMate
 
-**ParkMate** is an Elixir project for **managing parking spaces**.  
+**ParkMate** is a simple **parking management system** implemented in Elixir.
 It uses a **GenServer** to maintain the state of parking spots, allowing you to track, reserve, and free parking spaces efficiently.
+It uses **ETS (Erlang Term Storage)** for storing parking logs, providing fast in-memory storage and retrieval of vehicle parking history.
 
 ---
 
 ## Features
 
-- Track all parking spaces with occupancy status.  
-- Reserve (park) a vehicle into a specific spot.  
-- Release (unpark) a vehicle from a spot.  
-- Query all spots or only free spots.  
-- Lightweight and fast, suitable for concurrent usage.
+- Track all parking spaces with occupancy status
+- Reserve (park) a vehicle into a specific spot
+- Release (unpark) a vehicle from a spot
+- Query all spots or only free spots
+- Track and retrieve all parking logs
+- Retrieve all logs for a specific vehicle
+- Retrieve the latest log for a specific vehicle
+- Lightweight and fast, suitable for concurrent usage
 
 ---
 
