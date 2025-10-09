@@ -1,6 +1,7 @@
 defmodule ParkMate.Parking.Manager do
   use GenServer
   require Logger
+  alias ParkMate.Parking.ParkingLogs
 
   def start_link(_opts) do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
@@ -19,11 +20,14 @@ defmodule ParkMate.Parking.Manager do
   end
 
   def unpark(floor, spot) do
-    GenServer.cast(__MODULE__, {:unpark, floor, spot})
+    GenServer.call(__MODULE__, {:unpark, floor, spot})
   end
 
   def init(_opts) do
     Logger.info("Starting Parking Manager...")
+
+    Logger.info("Starting Parking Logs...")
+    ParkingLogs.start_link()
 
     {:ok, %{parking_spaces: ParkMate.Parking.Space.parking_spaces()}}
   end
@@ -51,6 +55,8 @@ defmodule ParkMate.Parking.Manager do
             Map.put(floor_value, spot, %{status: :occupied, vehicle: vehicle})
           end)
 
+        ParkingLogs.park(vehicle, floor, spot, NaiveDateTime.utc_now())
+
         {:reply, :ok, %{parking_spaces: parking_spaces}}
 
       status ->
@@ -58,16 +64,34 @@ defmodule ParkMate.Parking.Manager do
     end
   end
 
-  def handle_cast({:unpark, floor, spot}, %{parking_spaces: parking_spaces}) do
-    parking_spaces =
-      Map.update!(parking_spaces, floor, fn floor_value ->
-        Map.put(floor_value, spot, %{status: :free, vehicle: nil})
-      end)
+  def handle_call({:unpark, floor, spot}, _from, %{parking_spaces: parking_spaces} = state) do
+    vehicle = get_parked_vehicle(parking_spaces, floor, spot)
 
-    {:noreply, %{parking_spaces: parking_spaces}}
+    case ParkingLogs.get_latest_log(vehicle) do
+      nil ->
+        Logger.error("Vehicle not parked - #{vehicle}")
+        {:reply, {:error, "Vehicle not parked"}, state}
+
+      parking_log ->
+        ParkingLogs.unpark(parking_log, NaiveDateTime.utc_now())
+
+        parking_spaces =
+          Map.update!(parking_spaces, floor, fn floor_value ->
+            Map.put(floor_value, spot, %{status: :free, vehicle: nil})
+          end)
+
+        {:reply, :ok, %{parking_spaces: parking_spaces}}
+    end
   end
 
   defp check_for_availability(parking_spaces, floor, spot) do
     parking_spaces[floor][spot][:status]
+  end
+
+  defp get_parked_vehicle(parking_spaces, floor, spot) do
+    parking_spaces
+    |> Map.get(floor, %{})
+    |> Map.get(spot, %{})
+    |> Map.get(:vehicle, nil)
   end
 end
