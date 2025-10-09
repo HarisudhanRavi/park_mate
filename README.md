@@ -36,7 +36,16 @@ ParkMate.Parking.Manager.get_free_spaces()
 ParkMate.Parking.Manager.park(:floor_1, :spot_1, "TN001")
 
 # Unpark a vehicle
-ParkMate.Parking.Manager.unpark(:floor_1, :spot_1, "TN001")
+ParkMate.Parking.Manager.unpark(:floor_1, :spot_1)
+
+# Get all parking logs
+ ParkMate.Parking.ParkingLogs.get_all_logs()
+
+# Get all parking logs for a vehicle
+ ParkMate.Parking.ParkingLogs.get_all_logs("TN001")
+
+# Get the latest log for a vehicle
+ ParkMate.Parking.ParkingLogs.get_latest_log("TN001")
 ```
 
 ## Learn more about Elixir/Phoenix
