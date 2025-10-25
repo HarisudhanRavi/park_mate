@@ -15,7 +15,7 @@ defmodule ParkMateWeb.Parking.SpotsLive do
     <div>
       <h1 class="text-2xl font-extrabold dark:text-white mb-4">Parking</h1>
 
-      <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Select a spot to park
         </h5>
@@ -35,6 +35,6 @@ defmodule ParkMateWeb.Parking.SpotsLive do
     end)
   end
 
-  defp status_color(:free), do: "text-green-500"
-  defp status_color(:occupied), do: "text-red-500"
+  defp status_color(:free), do: "text-green-500 hover:text-green-700"
+  defp status_color(:occupied), do: "text-red-500 hover:text-red-700"
 end
