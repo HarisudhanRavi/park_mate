@@ -10,6 +10,12 @@ defmodule ParkMateWeb.Parking.SpotsLive do
     {:ok, socket |> assign(:floor, floor) |> assign(:spots, spots)}
   end
 
+  def mount(_params, _session, socket) do
+    {:ok,
+     push_navigate(socket, to: ~p"/parking/floors")
+     |> put_flash(:error, "Select a valid floor")}
+  end
+
   def render(assigns) do
     ~H"""
     <div>
