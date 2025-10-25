@@ -1,4 +1,4 @@
-defmodule ParkMateWeb.ParkingLive.Index do
+defmodule ParkMateWeb.Parking.FloorsLive do
   use ParkMateWeb, :live_view
   alias ParkMate.Parking.Manager
 

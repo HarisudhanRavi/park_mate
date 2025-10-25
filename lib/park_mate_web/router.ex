@@ -19,7 +19,9 @@ defmodule ParkMateWeb.Router do
 
     get "/", PageController, :home
 
-    live "/parking", ParkingLive.Index, :index
+    scope "/parking", Parking do
+      live "/floors", FloorsLive, :index
+    end
   end
 
   # Other scopes may use custom stacks.
