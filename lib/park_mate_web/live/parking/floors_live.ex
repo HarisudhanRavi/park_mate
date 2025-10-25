@@ -22,13 +22,13 @@ defmodule ParkMateWeb.Parking.FloorsLive do
         <ul class="my-4 space-y-3">
           <%= for floor <- @floors do %>
             <li>
-              <a
-                href={"##{floor}"}
+              <.link
+                navigate={~p"/parking/spots?floor=#{floor}"}
                 class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
               >
                 <.icon name="hero-building-office" />
                 <span class="flex-1 ms-3 whitespace-nowrap">{readable(floor)}</span>
-              </a>
+              </.link>
             </li>
           <% end %>
         </ul>

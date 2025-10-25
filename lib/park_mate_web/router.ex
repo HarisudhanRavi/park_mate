@@ -21,6 +21,7 @@ defmodule ParkMateWeb.Router do
 
     scope "/parking", Parking do
       live "/floors", FloorsLive, :index
+      live "/spots", SpotsLive, :index
     end
   end
 
